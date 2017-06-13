@@ -1,0 +1,28 @@
+{
+  "name": "node-playground",
+  "version": "0.0.1",
+  "scripts": {
+    "startDev": "webpack && nodemon server.js"
+  },
+  "dependencies": {
+    "@types/koa": "^2.0.39",
+    "fast-csv": "^2.4.0",
+    "koa": "^2.2.0",
+    "koa-body": "^2.1.0",
+    "koa-favicon": "^2.0.0",
+    "koa-pug": "^3.0.0-2",
+    "koa-router": "^7.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "node-ts": "^2.1.2",
+    "nodemon": "^1.11.0",
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.0.3",
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1",
+    "webpack-node-externals": "^1.5.4"
+  }
+}

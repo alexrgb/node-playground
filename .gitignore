@@ -57,3 +57,14 @@ typings/
 # dotenv environment variables file
 .env
 
+# Jetbrains
+.idea
+
+#Docker
+.docker
+
+#App
+src/dist
+src/uploads
+db
+

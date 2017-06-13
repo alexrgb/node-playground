@@ -1,0 +1,32 @@
+version: '2'
+services:
+  node:
+      container_name: ${COMPOSE_PROJECT_NAME}_node
+      image: node
+      build:
+        context: .
+        dockerfile: .docker/Dockerfile
+      depends_on:
+        - db
+      volumes:
+        - "./src:/usr/src"
+      ports:
+        - "${APP_PORT}:3000"
+      environment:
+        APP_PORT: ${APP_PORT}
+        NODE_ENV: "development"
+        MONGODB_USER: "${MONGO_USER}"
+        MONGODB_PASS: "${MONGO_PASS}"
+        MONGODB_DATABASE: "${MONGO_DB}"
+
+  db:
+      container_name: ${COMPOSE_PROJECT_NAME}_mongodb
+      image: mongo
+      volumes:
+        - ./db:/data/db
+      ports:
+        - "${MONGO_DB_PORT}:27017"
+      environment:
+          MONGODB_USER: "${MONGO_USER}"
+          MONGODB_PASS: "${MONGO_PASS}"
+          MONGODB_DATABASE: "${MONGO_DB}"
