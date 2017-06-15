@@ -2,24 +2,35 @@
   "name": "node-playground",
   "version": "0.0.1",
   "scripts": {
-    "startDev": "webpack && nodemon server.js"
+    "startDev": "webpack && nodemon server.js",
+    "test": "mocha --timeout 1500 --reporter spec --compilers ts:ts-node/register tests/*.test.ts tests/**/*.test.ts tests/**/**/*.test.ts tests/**/**/**/*.test.ts"
   },
   "dependencies": {
+    "@types/bluebird": "^3.5.5",
+    "@types/chai": "^4.0.0",
     "@types/koa": "^2.0.39",
+    "@types/mime": "^0.0.29",
+    "@types/mocha": "^2.2.41",
+    "@types/mongoose": "^4.7.17",
+    "@types/reflect-metadata": "^0.0.5",
+    "bluebird": "^3.5.0",
     "fast-csv": "^2.4.0",
     "koa": "^2.2.0",
     "koa-body": "^2.1.0",
     "koa-favicon": "^2.0.0",
     "koa-pug": "^3.0.0-2",
-    "koa-router": "^7.1.1"
+    "koa-router": "^7.1.1",
+    "mongoose": "^4.10.6"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
+    "mockgoose": "^7.3.3",
     "node-ts": "^2.1.2",
     "nodemon": "^1.11.0",
     "source-map-loader": "^0.2.1",
     "ts-loader": "^2.0.3",
+    "ts-node": "^3.0.6",
     "tslint": "^5.1.0",
     "typescript": "^2.2.2",
     "webpack": "^2.4.1",

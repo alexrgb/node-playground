@@ -10,9 +10,19 @@
     "experimentalDecorators": true,
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
+      "chai",
+      "reflect-metadata",
+      "mime",
+      "mocha",
+      "node"
     ]
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "./dist"
   ]
 }

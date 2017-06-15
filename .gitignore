@@ -66,5 +66,5 @@ typings/
 #App
 src/dist
 src/uploads
-db
+/db
 

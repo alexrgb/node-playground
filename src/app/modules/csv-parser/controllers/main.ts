@@ -7,13 +7,14 @@
 import * as fs from 'fs';
 import {EventEmitter} from 'events';
 import CSVParser from '../helpers/parser';
+import EventManager from '../../main/helpers/emitter';
 const csv = require('fast-csv');
 
 export default class MainController {
 
     private static view: string = '/usr/src/app/modules/csv-parser/views';
 
-    private static emitter: EventEmitter = new EventEmitter();
+    private static emitter: EventEmitter = EventManager.instance();
 
     /**
      * Import action
@@ -31,16 +32,15 @@ export default class MainController {
 
             let csvStream = csv()
                 .on('data', (data: any) => {
-                    let formated = CSVParser.parse(data);
+                    let formatted = CSVParser.parse(data);
 
-                    MainController.emitter.emit('db.input', formated);
+                    MainController.emitter.emit('user.import', formatted);
                 })
                 .on('error', (err: Error) => {
                     ctx.throw(500, 'Import error: ' + err.toString());
                 })
                 .on('end', () => {
-                    fs.unlink(file.path);
-                    console.log( 'end' );
+                    fs.unlink(file.path, () => console.log( 'end' ));
                 });
 
             stream.pipe(csvStream);
@@ -52,18 +52,5 @@ export default class MainController {
 
             ctx.render(path);
         }
-    }
-
-
-    /**
-     * View data action
-     * @param ctx
-     * @param next
-     * @return {Promise<void>}
-     */
-    public async viewAction(ctx: any, next: any): Promise<void> {
-        let path = `${MainController.view}/view`;
-
-        ctx.render(path);
     }
 }

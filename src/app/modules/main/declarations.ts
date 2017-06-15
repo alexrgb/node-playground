@@ -6,7 +6,13 @@
 'use strict';
 
 export interface MiddlewareFunc {
-    middleware: Function,
-    params?: any,
-    $inject?: any
+    middleware: Function;
+    params?: any;
+    $inject?: any;
+}
+
+export interface Route {
+    path: string;
+    method: string;
+    action: any;
 }

@@ -6,15 +6,18 @@
 'use strict';
 
 import * as Koa from 'koa';
-import * as path from 'path';
 
 import MainModule from './modules/main/module';
 import CSVParserModule from './modules/csv-parser/module';
+import DbModule from './modules/db/module';
+import UserModule from './modules/user/module';
 
 const app = new Koa();
 
+const db = new DbModule();
+const user = new UserModule();
 const csv = new CSVParserModule();
-const main = new MainModule([csv]);
+const main = new MainModule([db, csv, user]);
 
 main.register(app);
 

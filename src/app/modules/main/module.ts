@@ -5,15 +5,15 @@
 
 'use strict';
 
-const Router = require('koa-router');
 import {MiddlewareFunc} from './declarations';
-import {MAIN_MIDDLEWARES} from "./middlewares";
+import {MAIN_MIDDLEWARES} from './middlewares';
+
+const Router = require('koa-router');
 
 /**
  * @class MainModule
  */
 export default class MainModule {
-    public corePath: string;
 
     private routerInstance: any;
     private module: string = 'v1';
@@ -59,24 +59,30 @@ export default class MainModule {
 
     public register(app: any): void {
         this.appInstanse = app;
-        this.registerMiddlewares();
         this.registerRoutes();
+        this.registerMiddlewares();
     }
 
     private registerMiddlewares(): void {
+        this.modulesInstances.forEach((module: any) => {
+            if (module.haveMiddlewares) {
+                module.middlewares.forEach((middleware: MiddlewareFunc) => this.allMiddlewares.push(middleware));
+            }
+        });
+
         this.allMiddlewares.forEach((data: MiddlewareFunc) => {
             let params: any;
             let middleware = data.middleware;
 
             if (data.params) {
-                params = data.params
+                params = data.params;
             }
 
             if (data.$inject) {
                 let inject = data.$inject;
 
                 if (data.params) {
-                    if (typeof inject == 'string' && inject == 'app') {
+                    if (typeof inject === 'string' && inject === 'app') {
                         params = Object.assign(params, {app: this.app});
                     } else {
                         params = Object.assign(params, inject);
@@ -91,7 +97,12 @@ export default class MainModule {
     }
 
     private registerRoutes(): void {
-        this.modulesInstances.forEach((module: any) => module.register(this.routerInstance));
-        this.app.use(this.routerInstance.routes());
+        this.modulesInstances.forEach((module: any) => {
+            if (module.routable) {
+                module.register(this.routerInstance);
+            }
+        });
+
+        this.allMiddlewares.push({middleware: this.routerInstance.routes()});
     }
 }
